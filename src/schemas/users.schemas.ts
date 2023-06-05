@@ -13,3 +13,5 @@ export const userInfoSchema = userCreateSchema.extend({
     updatedAt: z.string(),
     deletedAt: z.string().nullable()
 }).omit({ password: true })
+
+export const userUpdateSchema = userCreateSchema.partial()
