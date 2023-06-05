@@ -20,6 +20,10 @@ export const loginUserService = async (userData: iUserLogin): Promise<iUserLogin
         throw new AppError("Invalid credentials", 401)
     }
 
+    if(user.deletedAt){
+        throw new AppError("user is deleted", 403)
+    }
+
     const token: string = sign(
         {
             email: user.email

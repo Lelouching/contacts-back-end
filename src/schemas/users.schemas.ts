@@ -9,5 +9,7 @@ export const userCreateSchema = z.object({
 
 export const userInfoSchema = userCreateSchema.extend({
     id: z.number(),
-    createdAt: z.string()
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    deletedAt: z.string().nullable()
 }).omit({ password: true })
