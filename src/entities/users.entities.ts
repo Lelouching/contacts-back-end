@@ -1,4 +1,4 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Contact } from "./contacts.entities";
 
 @Entity("users")
@@ -15,8 +15,8 @@ export class User{
     @Column({ type: "varchar", length: 250 })
     password: string
 
-    @Column({ type: "integer", unique: true })
-    phone: number
+    @Column({ type: "varchar", length: 15, unique: true })
+    phone: string
 
     @CreateDateColumn({ type: "date" })
     createdAt: Date
@@ -25,15 +25,8 @@ export class User{
     updatedAt: Date
 
     @DeleteDateColumn({ type: "date", nullable: true })
-    deletedAt: Date
+    deletedAt: Date | null | undefined
 
     @OneToMany(() => Contact, (contacts) => contacts.user)
     contacts: Contact[]
-
-    @BeforeInsert()
-    @BeforeUpdate()
-    convertPhoneToString(){
-        const converted: number = Number(this.phone)
-        this.phone = converted
-    }
 }
