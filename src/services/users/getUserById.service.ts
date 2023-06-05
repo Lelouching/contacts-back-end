@@ -7,8 +7,13 @@ import { iUserInfo } from "../../interfaces/users.interfaces";
 export const getUserByIdService = async (userId: number): Promise<iUserInfo | null> => {
     const userRepo: Repository<User> = AppDataSource.getRepository(User)
 
-    const user: User | null = await userRepo.findOneBy({
-        id: userId
+    const user: User | null = await userRepo.findOne({
+        where: {
+            id: userId
+        },
+        relations: {
+            contacts: true
+        }
     })
 
     if(!user) return null

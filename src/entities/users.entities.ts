@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Contact } from "./contacts.entities";
+import { hashSync } from "bcryptjs";
 
 @Entity("users")
 export class User{
@@ -29,4 +30,10 @@ export class User{
 
     @OneToMany(() => Contact, (contacts) => contacts.user)
     contacts: Contact[]
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    hashPassword(){
+        this.password = hashSync(this.password, 10)
+    }
 }

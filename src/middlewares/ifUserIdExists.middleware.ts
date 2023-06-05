@@ -12,5 +12,7 @@ export const ifUserIdExistsMiddleware = async (req: Request, res: Response, next
         throw new AppError("user not found", 404)
     }
 
+    req.userId = user
+
     return next()
 }
