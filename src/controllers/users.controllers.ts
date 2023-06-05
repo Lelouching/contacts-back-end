@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { iUserInfo } from "../interfaces/users.interfaces";
 import { createUserService } from "../services/users/createUser.service";
 import { deleteUserService } from "../services/users/deleteUser.service";
+import { getUserByIdService } from "../services/users/getUserById.service";
 
 export const createUserController = async (req: Request, res: Response): Promise<Response> => {
     const user: iUserInfo = await createUserService(req.body)
@@ -15,4 +16,12 @@ export const deleteUserController = async (req: Request, res: Response): Promise
     await deleteUserService(userId)
 
     return res.status(204).send()
+}
+
+export const getUserController = async (req: Request, res: Response): Promise<Response> => {
+    const userId: number = Number(req.params.id)
+
+    const user: iUserInfo | null = await getUserByIdService(userId)
+
+    return res.status(200).json(user)
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUserController, deleteUserController } from "../controllers/users.controllers";
+import { createUserController, deleteUserController, getUserController } from "../controllers/users.controllers";
 import { validateBodyMiddleware } from "../middlewares/validateBody.middleware";
 import { userCreateSchema } from "../schemas/users.schemas";
 import { ifUserEmailAlreadyExistsMiddleware } from "../middlewares/ifUserEmailAlreadyExists.middleware";
@@ -12,3 +12,4 @@ export const usersRoutes: Router = Router()
 
 usersRoutes.post("", validateBodyMiddleware(userCreateSchema), ifUserEmailAlreadyExistsMiddleware, ifUserPhoneAlreadyExistsMiddleware, createUserController)
 usersRoutes.delete("/:id", validateTokenMiddleware, ifUserIdExistsMiddleware, ifHasPermissionMiddleware, deleteUserController)
+usersRoutes.get("/:id", validateTokenMiddleware, ifUserIdExistsMiddleware, ifHasPermissionMiddleware, getUserController)
