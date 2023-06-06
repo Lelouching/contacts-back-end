@@ -25,3 +25,5 @@ $ npm run typeorm migration:run -- -d ./src/data-source
 
 # para rodar a aplicação, só dar o seguinte comando no terminal
 $ npm run dev
+
+Url do aplicativo: http://localhost:3000
