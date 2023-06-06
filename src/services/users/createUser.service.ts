@@ -11,5 +11,5 @@ export const createUserService = async (userData: iUserCreate): Promise<iUserInf
 
     await userRepo.save(user)
 
-    return userInfoSchema.parse(user)
+    return userInfoSchema.parse({...user, contacts: []})
 }

@@ -12,6 +12,6 @@ export const usersRoutes: Router = Router()
 
 usersRoutes.post("", validateBodyMiddleware(userCreateSchema), ifUserEmailAlreadyExistsMiddleware, ifUserPhoneAlreadyExistsMiddleware, createUserController)
 usersRoutes.delete("/:id", validateTokenMiddleware, ifUserIdExistsMiddleware, ifHasPermissionMiddleware, deleteUserController)
-usersRoutes.get("/:id", validateTokenMiddleware, ifUserIdExistsMiddleware, ifHasPermissionMiddleware, getUserController)
+usersRoutes.get("", validateTokenMiddleware, getUserController)
 usersRoutes.patch("/:id", validateBodyMiddleware(userUpdateSchema), ifUserPhoneAlreadyExistsMiddleware, ifUserEmailAlreadyExistsMiddleware, validateTokenMiddleware,
 ifUserIdExistsMiddleware, ifHasPermissionMiddleware, updateUserController)

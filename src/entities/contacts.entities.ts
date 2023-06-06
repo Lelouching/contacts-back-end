@@ -15,10 +15,10 @@ export class Contact{
     @Column({ type: "varchar", length: 15 })
     phone: string
 
-    @CreateDateColumn({ type: "date" })
+    @CreateDateColumn()
     createdAt: Date
 
-    @UpdateDateColumn({ type: "date" })
+    @UpdateDateColumn()
     updatedAt: Date
 
     @ManyToOne(() => User, (user) => user.contacts)

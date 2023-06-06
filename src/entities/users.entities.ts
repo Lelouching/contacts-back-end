@@ -1,6 +1,6 @@
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Contact } from "./contacts.entities";
-import { hashSync } from "bcryptjs";
+import { getRounds, hashSync } from "bcryptjs";
 
 @Entity("users")
 export class User{
@@ -19,13 +19,13 @@ export class User{
     @Column({ type: "varchar", length: 15, unique: true })
     phone: string
 
-    @CreateDateColumn({ type: "date" })
+    @CreateDateColumn()
     createdAt: Date
 
-    @UpdateDateColumn({ type: "date" })
+    @UpdateDateColumn()
     updatedAt: Date
 
-    @DeleteDateColumn({ type: "date", nullable: true })
+    @DeleteDateColumn({ nullable: true })
     deletedAt: Date | null | undefined
 
     @OneToMany(() => Contact, (contacts) => contacts.user)
@@ -34,6 +34,10 @@ export class User{
     @BeforeInsert()
     @BeforeUpdate()
     hashPassword(){
-        this.password = hashSync(this.password, 10)
+        const round: number = getRounds(this.password)
+
+        if(!round){
+            this.password = hashSync(this.password, 10)
+        }
     }
 }
