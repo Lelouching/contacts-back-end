@@ -1,3 +1,4 @@
+import { Contact } from "../../entities/contacts.entities"
 import { iUserInfo } from "../../interfaces/users.interfaces"
 
 declare global{
@@ -7,7 +8,8 @@ declare global{
                 id: number,
                 email: string
             },
-            userId: iUserInfo
+            userId: iUserInfo,
+            contactId: Contact
         }
     }
 }

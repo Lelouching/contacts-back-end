@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { contactInfoSchema } from "./contacts.schemas";
 
 export const userCreateSchema = z.object({
     fullName: z.string().max(50),
@@ -9,9 +10,10 @@ export const userCreateSchema = z.object({
 
 export const userInfoSchema = userCreateSchema.extend({
     id: z.number(),
-    createdAt: z.string(),
-    updatedAt: z.string(),
-    deletedAt: z.string().nullable()
+    createdAt: z.date(),
+    updatedAt: z.date(),
+    deletedAt: z.date().nullable(),
+    contacts: contactInfoSchema.array().nullish()
 }).omit({ password: true })
 
 export const userUpdateSchema = userCreateSchema.partial()

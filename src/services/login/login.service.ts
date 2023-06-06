@@ -6,6 +6,9 @@ import { sign } from "jsonwebtoken"
 import { iUserLogin, iUserLoginReturn } from "../../interfaces/login.interfaces"
 import { getUserByEmailService } from "../users/getUserByEmail.service"
 import { userInfoSchema } from "../../schemas/users.schemas"
+import { Contact } from "../../entities/contacts.entities"
+import { Repository } from "typeorm"
+import { AppDataSource } from "../../data-source"
 
 export const loginUserService = async (userData: iUserLogin): Promise<iUserLoginReturn> => {
     const user: User | null = await getUserByEmailService(userData.email)
@@ -35,8 +38,16 @@ export const loginUserService = async (userData: iUserLogin): Promise<iUserLogin
         }
     )
 
+    const contactRepo: Repository<Contact> = AppDataSource.getRepository(Contact)
+
+    const contacts: Contact[] = await contactRepo.findBy({
+        user: {
+            id: user.id
+        }
+    })
+
     return {
         token,
-        user: userInfoSchema.parse(user)
+        user: userInfoSchema.parse({...user, contacts})
     }
 }
